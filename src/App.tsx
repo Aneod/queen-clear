@@ -1,25 +1,30 @@
 import './App.css';
 import Map from './map/map';
+import { useState } from 'react';
 
 function App() {
 
-  let lat = 0
-  let lng = 0
-  let accuracy = 0
+  let [lat, setLat] = useState(0)
+  let [lng, setLng] = useState(0)
+  let [accuracy, setAccuracy] = useState(0)
 
   function success(pos: GeolocationPosition) {
     var crd = pos.coords;
-    
-    lat = crd.latitude
-    lng = crd.longitude
-    accuracy = crd.accuracy
-    // return([crd.latitude, crd.longitude, crd.accuracy])
+
+    setLat(crd.latitude)
+    setLng(crd.longitude)
+    setAccuracy(crd.accuracy)
   }
-  const position = navigator.geolocation.getCurrentPosition(success)
 
-  const watcher = navigator.geolocation.watchPosition(success);
+  navigator.geolocation.getCurrentPosition(success)
 
-  console.log(navigator.geolocation)
+  // const modifyPos = () => {
+  //   position = navigator.geolocation.getCurrentPosition(success)
+  // }
+
+  // setInterval(modifyPos, 1000)
+
+  navigator.geolocation.watchPosition(success);
 
   return <div className='App'>
     <Map/>
