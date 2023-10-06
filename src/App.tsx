@@ -20,10 +20,14 @@ function App() {
     navigator.geolocation.getCurrentPosition(success)
   }
 
-  setInterval(modifyPos, 100)
+  setInterval(modifyPos, 1000)
 
   return <div className='App'>
-    <Map/>
+    <Map
+      lat = {lat}
+      lng = {lng}
+      accuracy={accuracy}
+    />
     <div className='infoCoordinates'>
       <p>{lat}</p>
       <p>{lng}</p>
