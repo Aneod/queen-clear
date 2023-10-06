@@ -16,15 +16,11 @@ function App() {
     setAccuracy(crd.accuracy)
   }
 
-  navigator.geolocation.getCurrentPosition(success)
+  const modifyPos = () => {
+    navigator.geolocation.getCurrentPosition(success)
+  }
 
-  // const modifyPos = () => {
-  //   position = navigator.geolocation.getCurrentPosition(success)
-  // }
-
-  // setInterval(modifyPos, 1000)
-
-  navigator.geolocation.watchPosition(success);
+  setInterval(modifyPos, 100)
 
   return <div className='App'>
     <Map/>
