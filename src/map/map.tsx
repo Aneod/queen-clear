@@ -30,7 +30,7 @@ const Map: React.FC<Props> = ({lat, lng, accuracy}) => {
             </Popup>
         </Marker>
         <Rectangle bounds={[[rectangleLat, rectangleLng], [rectangleLatAuto, rectangleLngAuto]]} pathOptions={{ color: 'blue', weight: 1 }} />
-        <Marker position={[47.9687735, -1.8658154]}></Marker>
+        <Marker position={[lat, lng]}></Marker>
         {/* <Circle center={[parcThabor.lat + 0.009, parcThabor.lng + 0.001]} pathOptions={{ fillColor: 'blue' }} radius={100} />
         <Circle center={[parcThabor.lat - 0.005, parcThabor.lng + 0.007]} pathOptions={{ fillColor: 'blue' }} radius={100} />
         <Circle center={[parcThabor.lat + 0.002, parcThabor.lng - 0.004]} pathOptions={{ fillColor: 'blue' }} radius={100} /> */}
