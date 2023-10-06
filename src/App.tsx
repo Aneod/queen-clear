@@ -1,26 +1,34 @@
-import React from 'react';
-import logo from './logo.svg';
 import './App.css';
+import Map from './map/map';
 
 function App() {
-  return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.tsx</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+
+  let lat = 0
+  let lng = 0
+  let accuracy = 0
+
+  function success(pos: GeolocationPosition) {
+    var crd = pos.coords;
+    
+    lat = crd.latitude
+    lng = crd.longitude
+    accuracy = crd.accuracy
+    // return([crd.latitude, crd.longitude, crd.accuracy])
+  }
+  const position = navigator.geolocation.getCurrentPosition(success)
+
+  const watcher = navigator.geolocation.watchPosition(success);
+
+  console.log(navigator.geolocation)
+
+  return <div className='App'>
+    <Map/>
+    <div className='infoCoordinates'>
+      <p>{lat}</p>
+      <p>{lng}</p>
+      <p>{accuracy}</p>
     </div>
-  );
+  </div>
 }
 
 export default App;
