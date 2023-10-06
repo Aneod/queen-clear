@@ -14,6 +14,10 @@ function App() {
     setLat(crd.latitude)
     setLng(crd.longitude)
     setAccuracy(crd.accuracy)
+
+    if((crd.latitude > 47.9687735 && crd.latitude < 47.9687735 + .00035) && (crd.longitude > -1.8659154 && crd.longitude < -1.8659154 + .000525)){
+      alert('Zone atteinte')
+    }
   }
 
   const modifyPos = () => {

@@ -1,5 +1,5 @@
 import './map.css'
-import { MapContainer, TileLayer, useMap, Marker, Popup, Circle } from 'react-leaflet'
+import { MapContainer, TileLayer, useMap, Marker, Popup, Circle, Rectangle } from 'react-leaflet'
 
 type Props = {
     lat: number
@@ -9,10 +9,15 @@ type Props = {
 
 const Map: React.FC<Props> = ({lat, lng, accuracy}) => {
 
-    const parcThabor = {
-        lat: 48.114434,
-        lng: -1.666914
-    }
+    // const rectangleLat = 47.9687735
+    // const rectangleLatAuto = rectangleLat + .0035
+    // const rectangleLng = -1.8652154
+    // const rectangleLngAuto = rectangleLng + .00525
+
+    const rectangleLat = 47.9687735
+    const rectangleLatAuto = rectangleLat + .00035
+    const rectangleLng = -1.8659154
+    const rectangleLngAuto = rectangleLng + .000525
 
     return <MapContainer center={[47.9686735, -1.8663154]} zoom={13} scrollWheelZoom={true}>
         <TileLayer
@@ -24,7 +29,8 @@ const Map: React.FC<Props> = ({lat, lng, accuracy}) => {
                 Starting point
             </Popup>
         </Marker>
-        {/* <Circle center={[parcThabor.lat, parcThabor.lng]} pathOptions={{ fillColor: 'white' }} radius={1500} /> */}
+        <Rectangle bounds={[[rectangleLat, rectangleLng], [rectangleLatAuto, rectangleLngAuto]]} pathOptions={{ color: 'blue', weight: 1 }} />
+        <Marker position={[47.9687735, -1.8658154]}></Marker>
         {/* <Circle center={[parcThabor.lat + 0.009, parcThabor.lng + 0.001]} pathOptions={{ fillColor: 'blue' }} radius={100} />
         <Circle center={[parcThabor.lat - 0.005, parcThabor.lng + 0.007]} pathOptions={{ fillColor: 'blue' }} radius={100} />
         <Circle center={[parcThabor.lat + 0.002, parcThabor.lng - 0.004]} pathOptions={{ fillColor: 'blue' }} radius={100} /> */}
