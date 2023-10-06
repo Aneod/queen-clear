@@ -1,16 +1,15 @@
 {
   "files": {
-    "main.css": "/queen-clear/static/css/main.073c9b0a.css",
-    "main.js": "/queen-clear/static/js/main.c45edceb.js",
+    "main.css": "/queen-clear/static/css/main.bf8414ca.css",
+    "main.js": "/queen-clear/static/js/main.fcaed866.js",
     "static/js/787.7b1e6584.chunk.js": "/queen-clear/static/js/787.7b1e6584.chunk.js",
-    "static/media/logo.svg": "/queen-clear/static/media/logo.6ce24c58023cc2f8fd88fe9d219db6c6.svg",
     "index.html": "/queen-clear/index.html",
-    "main.073c9b0a.css.map": "/queen-clear/static/css/main.073c9b0a.css.map",
-    "main.c45edceb.js.map": "/queen-clear/static/js/main.c45edceb.js.map",
+    "main.bf8414ca.css.map": "/queen-clear/static/css/main.bf8414ca.css.map",
+    "main.fcaed866.js.map": "/queen-clear/static/js/main.fcaed866.js.map",
     "787.7b1e6584.chunk.js.map": "/queen-clear/static/js/787.7b1e6584.chunk.js.map"
   },
   "entrypoints": [
-    "static/css/main.073c9b0a.css",
-    "static/js/main.c45edceb.js"
+    "static/css/main.bf8414ca.css",
+    "static/js/main.fcaed866.js"
   ]
 }
