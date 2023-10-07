@@ -18,12 +18,14 @@ function App() {
   // ])
 
   let [listOfArea, setListOfArea] = useState([
-    {xPos: 47.9684735, yPos: -1.8648154, size: 100},
+    {xPos: lat, yPos: lng, size: 100},
   ])
 
   const GAME_SIZE = 200
 
-  if(gameCircle.size === 0 && lat !== 0 && lng !== 0) setgameCircle({xPos: lat, yPos: lng, size: GAME_SIZE})
+  if(gameCircle.size === 0 && lat !== 0 && lng !== 0) {
+    setgameCircle({xPos: lat, yPos: lng, size: GAME_SIZE})
+  }
 
   const inCircle = (lat: number, lng: number, circle: { xPos: number, yPos: number, size: number }) => {
     if(
@@ -47,6 +49,9 @@ function App() {
     setLat(crd.latitude)
     setLng(crd.longitude)
     setAccuracy(crd.accuracy)
+
+    console.log(gameCircle)
+    setListOfNotReachedCircle()
   }
 
   function error() {
@@ -82,48 +87,28 @@ function App() {
 
   const findClearAreaCoordinates = (size: number) => {
 
-    const xSign = getRandomArbitrary(0, 2) === 0 ? -1 : 1
-    const ySign = getRandomArbitrary(0, 2) === 0 ? -1 : 1
+    function getRandomIntInclusive(min: number, max: number) {
+      min = Math.ceil(min);
+      max = Math.floor(max);
+      return Math.floor(Math.random() * (max - min + 1)) + min;
+    }
+
+    const xSign = getRandomIntInclusive(0, 1) === 0 ? -1 : 1
+    const ySign = getRandomIntInclusive(0, 1) === 0 ? -1 : 1
 
     const xRadius = Math.random() * 4
-    const yRadius = Math.random() * 4 - Math.abs(xRadius)
+
+    const test = Math.random() * 1000
+    const yRadius = (test * 4 - Math.abs(xRadius)) / 1000
 
     const newXPos = gameCircle.xPos + .000008993 * gameCircle.size * xSign * Math.sqrt(xRadius)/2
     const newYPos = gameCircle.yPos + .000013464 * gameCircle.size * ySign * Math.sqrt(yRadius)/2
-
+    
     return {xPos: newXPos, yPos: newYPos, size}
   }
 
-  // const addCircleInGame = () => {
-  //   const listOfCircles = []
-  //   listOfArea.forEach(circle => {
-  //     listOfCircles.push(circle)
-  //   })
-  //   const newCircle = findClearAreaCoordinates(100)
-  //   listOfCircles.push(newCircle)
-
-  //   setListOfArea(listOfCircles)
-  // }
-
-  if(!listOfArea.length) {
-    const newCircle = findClearAreaCoordinates(100)
-    setListOfArea([newCircle])
-  }
-
-  const getRandomArbitrary = (min: number, max: number) => Math.random() * (max - min) + min
-
-  const getRandomLatInGame = getRandomArbitrary(
-    gameCircle.xPos + .000008993 * gameCircle.size,
-    (gameCircle.xPos + .000008993 * gameCircle.size) - 2 * gameCircle.size * .000008993
-  )
-
-  const getRandomLngInGame = getRandomArbitrary(
-    gameCircle.yPos + .000013464 * gameCircle.size,
-    (gameCircle.yPos + .000013464 * gameCircle.size) - 2 * gameCircle.size * .000013464
-  )
-
-  setTimeout(setListOfNotReachedCircle, 1000)
-
+  // setTimeout(setListOfNotReachedCircle, 1000)
+  
   navigator.geolocation.watchPosition(success, error)
 
   return <div className='App'>
