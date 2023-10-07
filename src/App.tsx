@@ -11,9 +11,9 @@ function App() {
   let [startPoint, setStartPoint] = useState({xPos: 0, yPos: 0, gameSize: 0})
 
   let [listOfArea, setListOfArea] = useState([
-    {xPos: 47.9696735, yPos: -1.8683154, size: 50},
-    {xPos: 47.9686735, yPos: -1.8683154, size: 50},
-    {xPos: 47.9684735, yPos: -1.8643154, size: 50},
+    {xPos: 47.9696735, yPos: -1.8683154, size: 100},
+    {xPos: 47.9686735, yPos: -1.8683154, size: 100},
+    {xPos: 47.9684735, yPos: -1.8643154, size: 100},
   ])
 
   const GAME_SIZE = 200
@@ -63,7 +63,7 @@ function App() {
 
     allCircleTests.forEach((isReached, index) => {
       if(!isReached) listOfNotReachedCircle.push(listOfArea[index])
-      else alert('Area reached => Deleted')
+      else console.log('Area reached => Deleted')
     })
 
     setListOfArea(listOfNotReachedCircle)
