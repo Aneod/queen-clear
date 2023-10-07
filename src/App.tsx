@@ -8,6 +8,8 @@ function App() {
   let [lng, setLng] = useState(0)
   let [accuracy, setAccuracy] = useState(0)
 
+  let [startPoint, setStartPoint] = useState({xPos: 0, yPos: 0, gameSize: 0})
+
   let [listOfArea, setListOfArea] = useState([
     {xPos: 47.9696735, yPos: -1.8683154, size: 50},
     {xPos: 47.9686735, yPos: -1.8683154, size: 50},
@@ -16,10 +18,7 @@ function App() {
 
   const GAME_SIZE = 200
 
-  let startPoint
-  if(!startPoint){
-    startPoint = {xPos: lat, yPos: lng, gameSize: GAME_SIZE}
-  }
+  if(startPoint.gameSize === 0 && lat != 0 && lng != 0) setStartPoint({xPos: lat, yPos: lng, gameSize: GAME_SIZE})
 
   const inCircle = (lat: number, lng: number, circle: { xPos: number, yPos: number, size: number }) => {
     if(
@@ -46,11 +45,11 @@ function App() {
     setLng(crd.longitude)
     setAccuracy(crd.accuracy)
 
-    modifyPos()
+    dispawnReachedAreas()
   }
 
   
-  const modifyPos = () => {
+  const dispawnReachedAreas = () => {
     let allCircleTests: boolean[] = []
     listOfArea.forEach(circle => {
       allCircleTests.push(inCircle(lat, lng, circle))
@@ -62,14 +61,13 @@ function App() {
       size: number;
     }[] = []
 
-    allCircleTests.forEach((isHere, index) => {
-      if(!isHere) listOfNotReachedCircle.push(listOfArea[index])
+    allCircleTests.forEach((isReached, index) => {
+      if(!isReached) listOfNotReachedCircle.push(listOfArea[index])
+      else alert('Area reached => Deleted')
     })
 
     setListOfArea(listOfNotReachedCircle)
   }
-
-  // setTimeout(modifyPos, 1000)
 
   navigator.geolocation.watchPosition(success)
 
