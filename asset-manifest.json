@@ -1,15 +1,15 @@
 {
   "files": {
     "main.css": "/queen-clear/static/css/main.13f818d1.css",
-    "main.js": "/queen-clear/static/js/main.86300982.js",
+    "main.js": "/queen-clear/static/js/main.cfa160b2.js",
     "static/js/787.7b1e6584.chunk.js": "/queen-clear/static/js/787.7b1e6584.chunk.js",
     "index.html": "/queen-clear/index.html",
     "main.13f818d1.css.map": "/queen-clear/static/css/main.13f818d1.css.map",
-    "main.86300982.js.map": "/queen-clear/static/js/main.86300982.js.map",
+    "main.cfa160b2.js.map": "/queen-clear/static/js/main.cfa160b2.js.map",
     "787.7b1e6584.chunk.js.map": "/queen-clear/static/js/787.7b1e6584.chunk.js.map"
   },
   "entrypoints": [
     "static/css/main.13f818d1.css",
-    "static/js/main.86300982.js"
+    "static/js/main.cfa160b2.js"
   ]
 }
