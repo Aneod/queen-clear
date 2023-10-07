@@ -85,7 +85,7 @@ function App() {
     do{
       newXPos = getRandomLatInGame
       newYPos = getRandomLngInGame
-    } while(!inCircle(newXPos, newYPos, gameCircle) && !inCircle(lat, lng, {xPos: newXPos, yPos: newYPos, size}))
+    } while(!inCircle(newXPos, newYPos, gameCircle) && inCircle(lat, lng, {xPos: newXPos, yPos: newYPos, size}))
 
     return {xPos: newXPos, yPos: newYPos, size}
   }
