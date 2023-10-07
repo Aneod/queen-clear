@@ -44,12 +44,10 @@ function App() {
     setLat(crd.latitude)
     setLng(crd.longitude)
     setAccuracy(crd.accuracy)
-
-    dispawnReachedAreas()
   }
 
   
-  const dispawnReachedAreas = () => {
+  const setListOfNotReachedCircle = () => {
     let allCircleTests: boolean[] = []
     listOfArea.forEach(circle => {
       allCircleTests.push(inCircle(lat, lng, circle))
@@ -63,11 +61,12 @@ function App() {
 
     allCircleTests.forEach((isReached, index) => {
       if(!isReached) listOfNotReachedCircle.push(listOfArea[index])
-      else console.log('Area reached => Deleted')
     })
 
     setListOfArea(listOfNotReachedCircle)
   }
+
+  setTimeout(setListOfNotReachedCircle, 1000)
 
   navigator.geolocation.watchPosition(success)
 

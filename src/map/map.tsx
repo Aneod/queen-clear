@@ -15,13 +15,15 @@ type Props = {
 
 const Map: React.FC<Props> = ({lat, lng, accuracy, listOfArea, startPoint}) => {
 
+    const circlesColor = 'green'
+
     const createCircles = (listOfArea: {
             xPos: number;
             yPos: number;
             size: number;
         }[]) => {
         return listOfArea.map((circle, i) => {
-            return <Circle key={i} center={[circle.xPos, circle.yPos]} pathOptions={{ fillColor: 'blue' }} radius={circle.size} />
+            return <Circle key={i} center={[circle.xPos, circle.yPos]} pathOptions={{ fillColor: circlesColor, color: circlesColor }} radius={circle.size} />
         })
       }
 
