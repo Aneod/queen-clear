@@ -12,7 +12,7 @@ function App() {
   let [gameCircle, setgameCircle] = useState({xPos: 0, yPos: 0, size: 0})
 
   let [listOfArea, setListOfArea] = useState([
-    {xPos: 48.0902168, yPos: -1.6842752, size: 100},
+    {xPos: 47.9686775, yPos: -1.866324, size: 100},
   ])
 
   const GAME_SIZE = 200
