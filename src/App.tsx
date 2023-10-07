@@ -7,12 +7,13 @@ function App() {
   let [lat, setLat] = useState(0)
   let [lng, setLng] = useState(0)
   let [accuracy, setAccuracy] = useState(0)
+  let [winPoint, setWinPoint] = useState(0)
 
   let [startPoint, setStartPoint] = useState({xPos: 0, yPos: 0, gameSize: 0})
 
   let [listOfArea, setListOfArea] = useState([
-    {xPos: 47.9696735, yPos: -1.8683154, size: 100},
-    {xPos: 47.9686735, yPos: -1.8683154, size: 100},
+    {xPos: 47.9684735, yPos: -1.8623154, size: 100},
+    {xPos: 47.9684735, yPos: -1.8633154, size: 100},
     {xPos: 47.9684735, yPos: -1.8643154, size: 100},
   ])
 
@@ -46,6 +47,12 @@ function App() {
     setAccuracy(crd.accuracy)
   }
 
+  function error() {
+    setLat(0)
+    setLng(0)
+    setAccuracy(0)
+  }
+
   
   const setListOfNotReachedCircle = () => {
     let allCircleTests: boolean[] = []
@@ -61,6 +68,7 @@ function App() {
 
     allCircleTests.forEach((isReached, index) => {
       if(!isReached) listOfNotReachedCircle.push(listOfArea[index])
+      else setWinPoint(winPoint + 1)
     })
 
     setListOfArea(listOfNotReachedCircle)
@@ -68,7 +76,7 @@ function App() {
 
   setTimeout(setListOfNotReachedCircle, 1000)
 
-  navigator.geolocation.watchPosition(success)
+  navigator.geolocation.watchPosition(success, error)
 
   return <div className='App'>
     <Map
@@ -79,9 +87,10 @@ function App() {
       startPoint = {startPoint}
     />
     <div className='infoCoordinates'>
-      <p>{lat}</p>
-      <p>{lng}</p>
-      <p>{accuracy}</p>
+      <p>xPos: {lat}</p>
+      <p>yPos: {lng}</p>
+      <p>Accuracy: {Math.floor(accuracy)}m</p>
+      <p>Winpoint: {winPoint}</p>
     </div>
   </div>
 }
