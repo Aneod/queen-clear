@@ -15,7 +15,7 @@ type Props = {
 
 const Map: React.FC<Props> = ({lat, lng, accuracy, listOfArea, gameCircle}) => {
 
-    const circlesColor = 'green'
+    const circlesColor = 'red'
 
     const createCircles = (listOfArea: {
             xPos: number;
