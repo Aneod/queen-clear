@@ -11,10 +11,14 @@ function App() {
 
   let [gameCircle, setgameCircle] = useState({xPos: 0, yPos: 0, size: 0})
 
+  // let [listOfArea, setListOfArea] = useState([
+  //   {xPos: 47.9684735, yPos: -1.8623154, size: 100},
+  //   {xPos: 47.9684735, yPos: -1.8633154, size: 100},
+  //   {xPos: 47.9684735, yPos: -1.8643154, size: 100},
+  // ])
+
   let [listOfArea, setListOfArea] = useState([
-    {xPos: 47.9684735, yPos: -1.8623154, size: 100},
-    {xPos: 47.9684735, yPos: -1.8633154, size: 100},
-    {xPos: 47.9684735, yPos: -1.8643154, size: 100},
+    {xPos: 47.9684735, yPos: -1.8648154, size: 100},
   ])
 
   const GAME_SIZE = 200
@@ -23,10 +27,8 @@ function App() {
 
   const inCircle = (lat: number, lng: number, circle: { xPos: number, yPos: number, size: number }) => {
     if(
-        lat < circle.xPos + .000008993 * circle.size &&
-        lat > (circle.xPos + .000008993 * circle.size) - 2 * circle.size * .000008993 &&
-        lng < circle.yPos + .000013464 * circle.size &&
-        lng > (circle.yPos + .000013464 * circle.size) - 2 * circle.size * .000013464
+        Math.abs(lat) < circle.xPos + .000008993 * circle.size &&
+        Math.abs(lng) < circle.yPos + .000013464 * circle.size
     ){
         const currentLat = (lat - circle.xPos) / (.000008993 * circle.size)
         const sqrtLat = Math.pow(currentLat * 2, 2)
@@ -80,14 +82,32 @@ function App() {
 
   const findClearAreaCoordinates = (size: number) => {
 
-    let newXPos = 0
-    let newYPos = 0
-    do{
-      newXPos = getRandomLatInGame
-      newYPos = getRandomLngInGame
-    } while(!inCircle(newXPos, newYPos, gameCircle) && inCircle(lat, lng, {xPos: newXPos, yPos: newYPos, size}))
+    const xSign = getRandomArbitrary(0, 2) === 0 ? -1 : 1
+    const ySign = getRandomArbitrary(0, 2) === 0 ? -1 : 1
+
+    const xRadius = Math.random() * 4
+    const yRadius = Math.random() * 4 - Math.abs(xRadius)
+
+    const newXPos = gameCircle.xPos + .000008993 * gameCircle.size * xSign * Math.sqrt(xRadius)/2
+    const newYPos = gameCircle.yPos + .000013464 * gameCircle.size * ySign * Math.sqrt(yRadius)/2
 
     return {xPos: newXPos, yPos: newYPos, size}
+  }
+
+  // const addCircleInGame = () => {
+  //   const listOfCircles = []
+  //   listOfArea.forEach(circle => {
+  //     listOfCircles.push(circle)
+  //   })
+  //   const newCircle = findClearAreaCoordinates(100)
+  //   listOfCircles.push(newCircle)
+
+  //   setListOfArea(listOfCircles)
+  // }
+
+  if(!listOfArea.length) {
+    const newCircle = findClearAreaCoordinates(100)
+    setListOfArea([newCircle])
   }
 
   const getRandomArbitrary = (min: number, max: number) => Math.random() * (max - min) + min
