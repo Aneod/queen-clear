@@ -9,7 +9,7 @@ function App() {
   let [accuracy, setAccuracy] = useState(0)
   let [winPoint, setWinPoint] = useState(0)
 
-  let [startPoint, setStartPoint] = useState({xPos: 0, yPos: 0, gameSize: 0})
+  let [gameCircle, setgameCircle] = useState({xPos: 0, yPos: 0, size: 0})
 
   let [listOfArea, setListOfArea] = useState([
     {xPos: 47.9684735, yPos: -1.8623154, size: 100},
@@ -19,7 +19,7 @@ function App() {
 
   const GAME_SIZE = 200
 
-  if(startPoint.gameSize === 0 && lat != 0 && lng != 0) setStartPoint({xPos: lat, yPos: lng, gameSize: GAME_SIZE})
+  if(gameCircle.size === 0 && lat !== 0 && lng !== 0) setgameCircle({xPos: lat, yPos: lng, size: GAME_SIZE})
 
   const inCircle = (lat: number, lng: number, circle: { xPos: number, yPos: number, size: number }) => {
     if(
@@ -68,11 +68,39 @@ function App() {
 
     allCircleTests.forEach((isReached, index) => {
       if(!isReached) listOfNotReachedCircle.push(listOfArea[index])
-      else setWinPoint(winPoint + 1)
+      else {
+        const newCircle = findClearAreaCoordinates(100)
+        listOfNotReachedCircle.push(newCircle)
+        setWinPoint(winPoint + 1)
+      }
     })
 
     setListOfArea(listOfNotReachedCircle)
   }
+
+  const findClearAreaCoordinates = (size: number) => {
+
+    let newXPos = 0
+    let newYPos = 0
+    do{
+      newXPos = getRandomLatInGame
+      newYPos = getRandomLngInGame
+    } while(!inCircle(newXPos, newYPos, gameCircle) && !inCircle(lat, lng, {xPos: newXPos, yPos: newYPos, size}))
+
+    return {xPos: newXPos, yPos: newYPos, size}
+  }
+
+  const getRandomArbitrary = (min: number, max: number) => Math.random() * (max - min) + min
+
+  const getRandomLatInGame = getRandomArbitrary(
+    gameCircle.xPos + .000008993 * gameCircle.size,
+    (gameCircle.xPos + .000008993 * gameCircle.size) - 2 * gameCircle.size * .000008993
+  )
+
+  const getRandomLngInGame = getRandomArbitrary(
+    gameCircle.yPos + .000013464 * gameCircle.size,
+    (gameCircle.yPos + .000013464 * gameCircle.size) - 2 * gameCircle.size * .000013464
+  )
 
   setTimeout(setListOfNotReachedCircle, 1000)
 
@@ -84,7 +112,7 @@ function App() {
       lng = {lng}
       accuracy={accuracy}
       listOfArea = {listOfArea}
-      startPoint = {startPoint}
+      gameCircle = {gameCircle}
     />
     <div className='infoCoordinates'>
       <p>xPos: {lat}</p>

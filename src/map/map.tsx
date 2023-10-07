@@ -10,10 +10,10 @@ type Props = {
         yPos: number;
         size: number;
     }[]
-    startPoint: {xPos: number, yPos: number, gameSize: number}
+    gameCircle: {xPos: number, yPos: number, size: number}
 }
 
-const Map: React.FC<Props> = ({lat, lng, accuracy, listOfArea, startPoint}) => {
+const Map: React.FC<Props> = ({lat, lng, accuracy, listOfArea, gameCircle}) => {
 
     const circlesColor = 'green'
 
@@ -36,7 +36,7 @@ const Map: React.FC<Props> = ({lat, lng, accuracy, listOfArea, startPoint}) => {
         <Marker position={[lat, lng]}></Marker>
 
         {createCircles(listOfArea)}
-        <Circle key={'startCircle'} center={[startPoint.xPos, startPoint.yPos]} pathOptions={{ fillColor: 'none', color: 'black' }} radius={startPoint.gameSize} />
+        <Circle key={'gameCircle'} center={[gameCircle.xPos, gameCircle.yPos]} pathOptions={{ fillColor: 'none', color: 'black' }} radius={gameCircle.size} />
 
     </MapContainer>
 }
