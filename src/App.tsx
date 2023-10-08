@@ -12,7 +12,8 @@ function App() {
   let [gameCircle, setgameCircle] = useState({xPos: 0, yPos: 0, size: 0})
 
   let [listOfArea, setListOfArea] = useState([
-    {xPos: 47.9686775, yPos: -1.866324, size: 100},
+    {xPos: 47.9686742, yPos: -1.8663187, size: 100},
+    {xPos: 48.0903168, yPos: -1.6842752, size: 100},
   ])
 
   const GAME_SIZE = 200
@@ -34,7 +35,7 @@ function App() {
 
       const currentLng = (lng - circle.yPos) / (.000013464 * circle.size)
       const sqrtLng = Math.pow(currentLng * 2, 2)
-      
+
       return sqrtLat + sqrtLng <= 4
     }
     return false
@@ -47,10 +48,10 @@ function App() {
     setLng(crd.longitude)
     setAccuracy(crd.accuracy)
 
-    setListOfNotReachedCircle()
+    setListOfNotReachedCircle(crd.latitude, crd.longitude)
   }
   
-  const setListOfNotReachedCircle = () => {
+  const setListOfNotReachedCircle = (lat: number, lng: number) => {
     
     let allCircleTests: boolean[] = []
     listOfArea.forEach(circle => {
@@ -66,18 +67,27 @@ function App() {
     allCircleTests.forEach((isReached, index) => {
       if(!isReached) listOfNotReachedCircle.push(listOfArea[index])
       else {
-        if(gameCircle.xPos != 0){
-          const newCircle = findClearAreaCoordinates(100)
-          listOfNotReachedCircle.push(newCircle)
-          setWinPoint(winPoint + 1)
+        const upToDateGameCircle = gameCircle.xPos == 0 ? {xPos: lat, yPos: lng, size: GAME_SIZE} : gameCircle
+        let newCircle: {
+          xPos: number;
+          yPos: number;
+          size: number;
+        } = findClearAreaCoordinates(100, upToDateGameCircle)
+
+        while(!inCircle(newCircle.xPos, newCircle.yPos, upToDateGameCircle) || inCircle(lat, lng, newCircle)){
+          newCircle = findClearAreaCoordinates(100, upToDateGameCircle)
         }
+
+        listOfNotReachedCircle.push(newCircle)
+
+        setWinPoint(winPoint + 1)
       }
     })
 
     setListOfArea(listOfNotReachedCircle)
   }
 
-  const findClearAreaCoordinates = (size: number) => {
+  const findClearAreaCoordinates = (size: number, upToDateGameCircle: { xPos: number, yPos: number, size: number }) => {
 
     function getRandomIntInclusive(min: number, max: number) {
       min = Math.ceil(min);
@@ -93,13 +103,15 @@ function App() {
     const test = Math.random() * 1000
     const yRadius = (test * 4 - Math.abs(xRadius)) / 1000
 
-    const newXPos = gameCircle.xPos + .000008993 * gameCircle.size * xSign * Math.sqrt(xRadius)/2
-    const newYPos = gameCircle.yPos + .000013464 * gameCircle.size * ySign * Math.sqrt(yRadius)/2
+    const newXPos = upToDateGameCircle.xPos + .000008993 * upToDateGameCircle.size * xSign * Math.sqrt(xRadius)/2
+    const newYPos = upToDateGameCircle.yPos + .000013464 * upToDateGameCircle.size * ySign * Math.sqrt(yRadius)/2
 
     return {xPos: newXPos, yPos: newYPos, size}
   }
   
-  navigator.geolocation.watchPosition(success)
+
+  const getPosition = () => navigator.geolocation.getCurrentPosition(success)
+  setTimeout(getPosition, 1000)
 
   return <div className='App'>
     <Map
