@@ -23,7 +23,9 @@ const Map: React.FC<Props> = ({lat, lng, accuracy, listOfArea, gameCircle}) => {
             size: number;
         }[]) => {
         return listOfArea.map((circle, i) => {
-            return <Circle key={i} center={[circle.xPos, circle.yPos]} pathOptions={{ fillColor: circlesColor, color: circlesColor }} radius={circle.size} />
+            if(circle.size > 0){
+                return <Circle key={i} center={[circle.xPos, circle.yPos]} pathOptions={{ fillColor: circlesColor, color: circlesColor }} radius={circle.size} />
+            }
         })
       }
 
